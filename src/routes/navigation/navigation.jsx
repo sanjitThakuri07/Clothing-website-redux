@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
+import { selectCurrentUser } from "../../store/user/user.selector";
+
 import CartIcon from "../../components/cart-icon/CartIcon";
+
 import CartDropdown from "../../components/cart-dropdown/CartDropdown";
 
 import {
@@ -32,7 +37,7 @@ const Links = [
 ];
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
   const { isCartOpen, setIsCartOpen } = useContext(CartContext);
 
   const signOutHandler = async () => {
