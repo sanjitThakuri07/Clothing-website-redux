@@ -1,5 +1,17 @@
 import React, { useContext } from "react";
 
+import { useDispatch } from "react-redux";
+
+import { useSelector } from "react-redux";
+
+import {
+  addItemToCart,
+  removeItemFromCart,
+  decreaseItemCountFromCart,
+} from "../../store/cart/cart.action";
+
+import { selectCartItems } from "../../store/cart/cart.selector";
+
 import "./checkout-item.styles.scss";
 
 import { MdDeleteForever } from "react-icons/md";
@@ -7,13 +19,14 @@ import { MdDeleteForever } from "react-icons/md";
 import { CartContext } from "../../context/cart.context";
 
 const CheckoutItem = ({ cartItem }) => {
-  const { addItemToCart, decreaseItemCountFromCart, removeItemFromCart } =
-    useContext(CartContext);
-
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
   const { name, imageUrl, id, quantity, price } = cartItem;
 
-  const addItemToCartHandler = () => addItemToCart(cartItem);
-  const decreaseItemToCartHandler = () => decreaseItemCountFromCart(cartItem);
+  const addItemToCartHandler = () =>
+    dispatch(addItemToCart(cartItems, cartItem));
+  const decreaseItemToCartHandler = () =>
+    dispatch(decreaseItemCountFromCart(cartItems, cartItem));
   return (
     <div className="checkout-item-container">
       <div className="image-container">
@@ -32,7 +45,7 @@ const CheckoutItem = ({ cartItem }) => {
       <span className="price">{price}</span>
       <div
         className="remove-button"
-        onClick={() => removeItemFromCart(cartItem)}
+        onClick={() => dispatch(removeItemFromCart(cartItems, cartItem))}
       >
         {/* <MdDeleteForever /> */}
         &#10005;

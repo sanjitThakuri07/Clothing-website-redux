@@ -1,13 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet, Link } from "react-router-dom";
 
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 import { selectCurrentUser } from "../../store/user/user.selector";
 
 import CartIcon from "../../components/cart-icon/CartIcon";
 
 import CartDropdown from "../../components/cart-dropdown/CartDropdown";
+
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 
 import {
   NavigationContainer,
@@ -37,8 +42,10 @@ const Links = [
 ];
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+  // const { isCartOpen, setIsCartOpen } = useSelector();
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   const signOutHandler = async () => {
     await signOutUser();
@@ -65,7 +72,7 @@ const Navigation = () => {
           )}
           <CartIcon
             onClick={() => {
-              setIsCartOpen(!isCartOpen);
+              dispatch(setIsCartOpen(!isCartOpen));
             }}
           ></CartIcon>
         </NavLinks>

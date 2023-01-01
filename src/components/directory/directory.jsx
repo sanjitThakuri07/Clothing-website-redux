@@ -15,6 +15,7 @@ const Directory = () => {
 
   //   getCategoriesMap();
   // }, []);
+
   return (
     <CategoriesContainer>
       {categories.map((category) => {

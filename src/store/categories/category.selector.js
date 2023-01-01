@@ -34,3 +34,10 @@ export const selectCategoriesMap = createSelector(
       return acc;
     }, {})
 );
+
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoriesReducer],
+  (categoriesSlice) => {
+    return categoriesSlice.isLoading;
+  }
+);
